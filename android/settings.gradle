@@ -1,0 +1,3 @@
+rootProject.name = 'VideoUpload'
+
+include ':app'
