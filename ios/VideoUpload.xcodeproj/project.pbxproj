@@ -24,6 +24,7 @@
 		473E83871D15F908008B33E6 /* libRNRecorder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 473E83841D15F8ED008B33E6 /* libRNRecorder.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		91FBE83DE4D04A66AAF1EEC7 /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A56823D3C19E4543A4CC919E /* libRCTVideo.a */; };
+		F57EE7E01D17AE8C0092DF2C /* libRNUploader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F57EE7DF1D17AE160092DF2C /* libRNUploader.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		F57EE7DE1D17AE160092DF2C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F57EE7CD1D17AE160092DF2C /* RNUploader.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNUploader;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -152,6 +160,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		A56823D3C19E4543A4CC919E /* libRCTVideo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTVideo.a; sourceTree = "<group>"; };
 		F1ADCB047BDE4A7E83231A9A /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
+		F57EE7CD1D17AE160092DF2C /* RNUploader.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNUploader.xcodeproj; path = "../node_modules/react-native-uploader/RNUploader/RNUploader.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F57EE7E01D17AE8C0092DF2C /* libRNUploader.a in Frameworks */,
 				473E83871D15F908008B33E6 /* libRNRecorder.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -307,6 +317,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				F57EE7CD1D17AE160092DF2C /* RNUploader.xcodeproj */,
 				473E83731D15F8ED008B33E6 /* RNRecorder.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -348,6 +359,14 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* VideoUpload.app */,
 				00E356EE1AD99517003FC87E /* VideoUploadTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F57EE7CE1D17AE160092DF2C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F57EE7DF1D17AE160092DF2C /* libRNUploader.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -469,6 +488,10 @@
 					ProductGroup = 473E83741D15F8ED008B33E6 /* Products */;
 					ProjectRef = 473E83731D15F8ED008B33E6 /* RNRecorder.xcodeproj */;
 				},
+				{
+					ProductGroup = F57EE7CE1D17AE160092DF2C /* Products */;
+					ProjectRef = F57EE7CD1D17AE160092DF2C /* RNUploader.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -568,6 +591,13 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F57EE7DF1D17AE160092DF2C /* libRNUploader.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNUploader.a;
+			remoteRef = F57EE7DE1D17AE160092DF2C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

@@ -16,6 +16,33 @@ import {
 var screen    = require('Dimensions').get('window');
 var Recorder  = require('react-native-screcorder');
 var Video = require('react-native-video').default;
+var url;
+
+// var RNUploader = require('NativeModules').RNUploader;
+var RNUploader = require('./Uploader')
+var xml2json = require('node-xml2json');
+var s3_policy = require('./s3_policy');
+let s3_opts = {
+  bucket: BUCKET_NAME,
+  region: 'us-west-2',
+  key: AWS_KEY,
+  secret: AWS_SECRET,
+  type: 'video/',
+  path: 'images/',
+  acl: 'public-read',
+  expires: new Date(Date.now() + 60000),
+  length: 10485760, // 10M as maximal size
+};
+
+function _generateUUID() {
+  var d = new Date().getTime();
+  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = (d + Math.random()*16)%16 | 0;
+      d = Math.floor(d/16);
+      return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+  });
+  return uuid;
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -77,6 +104,8 @@ const styles = StyleSheet.create({
 		color: "white"
 	}
 });
+
+
 
 /*********** RECORDER COMPONENT ***********/
 
@@ -171,6 +200,7 @@ var Record = React.createClass({
       currentDuration: 0,
       limitReached: false
     });
+    this._uploadImages(url);
   },
 
   preview: function() {
@@ -205,7 +235,59 @@ var Record = React.createClass({
   onNewSegment: function(segment) {
     console.log('segment = ', segment);
     this.state.currentDuration += segment.duration * 1000;
+    url = segment.url;
   },
+
+  /*********** Upload Video  Component ******/
+
+
+  _uploadImages(url){
+    let files = [
+      {
+        name: 'file',
+        filename: _generateUUID() + '.mp4',
+        filepath: url,
+        filetype: 'video/mp4',
+      }
+
+    let p = s3_policy(s3_opts);
+    // console.log(p.policy);
+    // console.log(p.signature);
+
+    let opts = {
+      url: 'https://' + s3_opts.bucket + '.s3.amazonaws.com/',
+      files: files,
+      params: {
+        key: 'images/${filename}',
+        acl: s3_opts.acl,
+        'X-Amz-Signature': p.signature,
+        'x-amz-credential': p.credential,
+        'X-Amz-Algorithm': 'AWS4-HMAC-SHA256',
+        'X-Amz-Date': p.date + 'T000000Z',
+        'Content-Type': 'video/mp4',
+        'policy': p.policy,
+        'success_action_status': '201',
+        'x-amz-meta-uuid': '14365123651274'
+      }
+    };
+
+    this.setState({ uploading: true, showUploadModal: true, });
+    RNUploader.upload( opts, ( err, res )=>{
+      if( err ){
+          console.log(err);
+          this.setState( { uploading: false, uploadStatus: err } );
+          return;
+      }
+
+      let status = res.status;
+      let responseJson = xml2json.parser( res.data );
+
+      console.log('upload complete with status ' + status);
+      console.log( responseJson );
+      this.setState( { uploading: false, uploadStatus: status } );
+    });
+  },
+
 
   /*
    *  RENDER METHODS
